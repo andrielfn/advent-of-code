@@ -25,27 +25,20 @@ defmodule DayThree do
     |> MapSet.size
   end
 
-  def deliver("^" <> moves, map, x, y) do
-    map = MapSet.put(map, {x , y + 1})
-    deliver(moves, map, x , y + 1)
-  end
+  def deliver("^" <> moves, map, x, y), do: do_deliver(moves, map, x, y + 1)
 
-  def deliver("v" <> moves, map, x, y) do
-    map = MapSet.put(map, {x , y - 1})
-    deliver(moves, map, x, y - 1)
-  end
+  def deliver("v" <> moves, map, x, y), do: do_deliver(moves, map, x, y - 1)
 
-  def deliver("<" <> moves, map, x, y) do
-    map = MapSet.put(map, {x - 1 , y})
-    deliver(moves, map, x - 1, y)
-  end
+  def deliver("<" <> moves, map, x, y), do: do_deliver(moves, map, x - 1, y)
 
-  def deliver(">" <> moves, map, x, y) do
-    map = MapSet.put(map, {x + 1 , y})
-    deliver(moves, map, x + 1, y)
-  end
+  def deliver(">" <> moves, map, x, y), do: do_deliver(moves, map, x + 1, y)
 
   def deliver(_, map, _x, _y), do: map
+
+  defp do_deliver(moves, map, x, y) do
+    map = MapSet.put(map, {x , y})
+    deliver(moves, map, x, y)
+  end
 
   defp moves do
     @input
